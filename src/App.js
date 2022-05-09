@@ -384,10 +384,11 @@ function App() {
     e.preventDefault();
     console.log(e.target[0].value)
     console.log(e.target[1].value)
+    console.log(process.env)
 
     try {
       let response =  await axios.post(
-        'http://localhost:8888/auth/signin',
+        `http://localhost:${process.env.REACT_APP_API_PORT}/auth/signin`,
         {
           username: e.target[0].value,
           password: e.target[1].value
@@ -397,10 +398,10 @@ function App() {
   
       console.log(response)
 
-      let token_info = await axios.get('http://localhost:8888/auth/token', {withCredentials: true})
+      let token_info = await axios.get(`http://localhost:${process.env.REACT_APP_API_PORT}/auth/token`, {withCredentials: true})
       console.log(token_info)
 
-      let user_info =  await axios.get('http://localhost:8888/user', {
+      let user_info =  await axios.get(`http://localhost:${process.env.REACT_APP_API_PORT}/user`, {
         headers: {Authorization: `Bearer ${token_info.data.token}`}
       })
       console.log(user_info)
